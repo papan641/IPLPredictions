@@ -62,7 +62,7 @@
             document.getElementById("predictBtn").addEventListener("click", predictWinner);
         });
         
-        function predictWinner() {
+        async function predictWinner() {
             var teamA = document.getElementById("teamA").value.trim();
             var teamB = document.getElementById("teamB").value.trim();
             var venue = document.getElementById("venue").value;
@@ -77,8 +77,19 @@
                 return;
             }
             
-            var winner = Math.random() < 0.5 ? teamA : teamB;
-            document.getElementById("prediction").innerText = "Predicted Winner: " + winner;
+            try {
+                let response = await fetch(`https://api.example.com/ipl-prediction?teamA=${teamA}&teamB=${teamB}&venue=${venue}`);
+                let data = await response.json();
+                
+                if (data.winner) {
+                    document.getElementById("prediction").innerText = "Predicted Winner: " + data.winner;
+                } else {
+                    document.getElementById("prediction").innerText = "Prediction unavailable";
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                document.getElementById("prediction").innerText = "Error fetching prediction";
+            }
         }
     </script>
 </body>
