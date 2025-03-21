@@ -3,10 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IPL Predictions</title>
+    <title>IPL Match Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        input, select, button {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background: blue;
+            color: white;
+            cursor: pointer;
+        }
+        .result {
+            margin-top: 15px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to IPL Predictions</h1>
-    <p>This is a default HTML file for IPL Predictions.</p>
+    <div class="container">
+        <h2>IPL Match Prediction</h2>
+        <input type="text" id="teamA" placeholder="Enter Team A">
+        <input type="text" id="teamB" placeholder="Enter Team B">
+        <select id="venue">
+            <option value="">Select Venue</option>
+            <option value="Mumbai">Mumbai</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Chennai">Chennai</option>
+            <option value="Bangalore">Bangalore</option>
+        </select>
+        <button id="predictBtn">Predict Winner</button>
+        <div id="prediction" class="result"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("predictBtn").addEventListener("click", predictWinner);
+        });
+        
+        function predictWinner() {
+            var teamA = document.getElementById("teamA").value.trim();
+            var teamB = document.getElementById("teamB").value.trim();
+            var venue = document.getElementById("venue").value;
+            
+            if (!teamA || !teamB || !venue) {
+                alert("Please fill all fields");
+                return;
+            }
+            
+            if (teamA.toLowerCase() === teamB.toLowerCase()) {
+                alert("Team A and Team B must be different");
+                return;
+            }
+            
+            var winner = Math.random() < 0.5 ? teamA : teamB;
+            document.getElementById("prediction").innerText = "Predicted Winner: " + winner;
+        }
+    </script>
 </body>
 </html>
